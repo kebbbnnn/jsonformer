@@ -1,5 +1,5 @@
 from typing import List
-from transformers import PreTrainedTokenizer, LogitsWarper, StoppingCriteria
+from transformers import PreTrainedTokenizer, LogitsProcessor, StoppingCriteria
 import torch
 
 
@@ -63,7 +63,7 @@ class NumberStoppingCriteria(StoppingCriteria):
         return False
 
 
-class OutputNumbersTokens(LogitsWarper):
+class OutputNumbersTokens(LogitsProcessor):
     def __init__(self, tokenizer: PreTrainedTokenizer, prompt: str):
         self.tokenizer = tokenizer
         self.tokenized_prompt = tokenizer(prompt, return_tensors="pt")
@@ -86,7 +86,7 @@ class OutputNumbersTokens(LogitsWarper):
         return scores
 
 
-class OutputCommaAndBracketTokens(LogitsWarper):
+class OutputCommaAndBracketTokens(LogitsProcessor):
     def __init__(self, tokenizer: PreTrainedTokenizer, prompt: str):
         self.tokenizer = tokenizer
         self.tokenized_prompt = tokenizer(prompt, return_tensors="pt")
